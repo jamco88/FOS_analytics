@@ -1,0 +1,8 @@
+*.index
+*.mm
+*.projection
+*.dict
+/archive
+*__pycache__*
+*.csv
+*.json
