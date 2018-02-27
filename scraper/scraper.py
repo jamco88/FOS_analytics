@@ -27,7 +27,7 @@ def update_corpus():
     proxies = {'http': 'http://' + username + ':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/', 'https': 'https://'+username+':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/'}
       
     #start_no = 163401
-    start_no = 169414
+    start_no = 125416
     
     # Check for the existence of the OmbudsmanCorpus file
     if os.path.isfile(FILE_NAME):
@@ -36,7 +36,7 @@ def update_corpus():
         print("No file")
         retrieved_complaints = []
     
-    for n in range(start_no, start_no-1000, -1):
+    for n in range(start_no, start_no-30000, -1):
         url = "http://www.ombudsman-decisions.org.uk/viewPDF.aspx?FileID="+str(n)
         #print(url)
         n_trys = 3
@@ -61,7 +61,7 @@ def update_corpus():
                 corpus_entry['URL'] = x.url[7::]
                 corpus_entry['FileID'] = n
                 corpus_entry['raw_text'] = raw_text
-                corpus_entry['summary'] = raw_text.replace(".", ". ")[:400]+"..."
+                corpus_entry['summary'] = raw_text.replace(".", ". ").replace("\n", ". ").replace("\r", ". ")[:400]+"..."
 
                 with open(FILE_NAME, 'a', encoding='ISO-8859-1') as f:
                     f.write(json.dumps(corpus_entry.to_dict()))

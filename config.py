@@ -1,6 +1,6 @@
 FILE_NAME = "./scraper/scraping_data/small_corpus2.json"
 
-COMPANY_ALIASES = "natwest halifax amex bos rb uki lv rsa urv wonga quick quid pound pocket"
+COMPANY_ALIASES = "natwest halifax amex bos rb uki lv rsa urv wonga quick quid pound pocket barclaycard ipa"
 NO_TOPICS = 15
 NO_SIM_TOPICS = 200
 THRESHOLD = 0.70

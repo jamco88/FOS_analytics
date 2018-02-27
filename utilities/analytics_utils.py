@@ -4,7 +4,7 @@ import csv
 import ast
 import json
 
-from config import FILE_NAME, COMPANY_ALIASES
+from config import FILE_NAME, COMPANY_ALIASES, NO_TOPICS
 
 class OmbudsmanLibrary(object):
     def __iter__(self):
@@ -32,6 +32,16 @@ def score_topics(lsi_model, tfidf_corpus, topic, select_topics = 3):
     topic_info_dict = {**topic_series, **dict(zip(top_top_titles, main_topics))}
     return topic_info_dict
 
+    
+def score_topics_lda(lda_model, corpus, sector, select_topics = 3):
+    theme_outputs = lda_model[corpus]
+    topic_names = {x:"Topic"+str(x)+sector for x in range(NO_TOPICS)}
+    sorted_topics = sorted([x for x in theme_outputs], key=lambda x: x[1], reverse=True)
+    top_top_titles = ["top_topic" + str(n) for n in range(1, select_topics+1)]
+    topic_series = dict(map(lambda x: (topic_names[x[0]], x[1]), sorted_topics))
+    main_topics = list(map(lambda x: (topic_names[x[0]]), sorted_topics))[:3]
+    topic_info_dict = {**topic_series, **dict(zip(top_top_titles, main_topics))}
+    return topic_info_dict
                   
 def streamer():
     return map(lambda x: x["Text"], stream())
@@ -40,6 +50,7 @@ def stream():
     mem_friend_corpus = OmbudsmanLibrary()
     for row in mem_friend_corpus:
         row['Text'] = [word for word in row['Text'] if (word not in row['Business'].lower() + COMPANY_ALIASES)]
+        row['summary'] = row['summary'].replace("\n", ". ").replace("\r", ". ")[8:]
         yield row
 
 

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="jumbotron">
+<div class="container">
+<h2>About this Facial Recognition tool</h2>
+
+<div class="row top-buffer">
+	<div align="left" class="col-lg-12">
+	<p>This tool can be used to manage a database of fraudsters' IDs, and to facially compare new customers suspected of fraud, known fraudsters in the database.</p>
+	<p>Previously, the RAFT team were looking to identify impersonators by visually the image in a new ID, with those on older ones. This tool uses machine learning algorithms to do the same thing, but more quickly and objectively.</p>
+	<p>	It has the following functionality:</p>
+	<p style="margin-left: 40px">1. New ID documents can be compared facially with all the faces already in the database. For this functionality, go to the <a href="/">main page</a>, upload the image, and view the results</p>
+	<p style="margin-left: 80px">a) <i>Similarity Scores</i> vary between 0 and 10 - higher numbers reflect more similar faces.	
+	<p style="margin-left: 80px">b) The results are returned in order most to least similar faces.	
+	<p style="margin-left: 40px">2. If the new image does not match any already in the database, it can be added to the database.</p>
+	<p style="margin-left: 40px">3. Images added by accident can be <a href="/delete_image">removed</a> from the database.</p>
+	</div>
+</div>
+<div class="row top-buffer">
+</div>
+</div>
+</div>
+{% endblock body %}

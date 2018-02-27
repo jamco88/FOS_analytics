@@ -1,0 +1,312 @@
+ @import url('https://fonts.googleapis.com/css?family=Raleway');
+body{
+    text-align: center;    
+	position: relative; 
+	padding-top: 10px;
+	font-family: 'Raleway', sans-serif;
+}
+
+thead.table_head {
+	background-color: #ee7600;
+	color: #FFFFFF;
+}
+
+.table-hover>tbody>tr:hover {
+	background-color: #FFEDCC;
+}
+
+tr.cust_level {
+	background-color: #FFF6E5;
+}
+
+tr.docs {
+	background-color: #FFEDCC;
+}
+
+.container {
+max-width: 75rem;
+}
+
+#title-bar {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.page-footer  > p{
+	color : #000000;
+	text-align: right;
+}
+/* navbar */
+.navbar-default {
+    background-color: #ee7600;
+    border-color: #ee7600;
+}
+/* Title */
+.navbar-default .navbar-brand {
+    color: #777;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #5E5E5E;
+}
+/* Link */
+.navbar-default .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #FFFFFF;
+	background-color: #D66A00;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #FFFFFF;
+    background-color: #D66A00;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #FFFFFF;
+    background-color: #D66A00;
+}
+/* Caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+/* Mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+
+.submit-button {
+	position: relative;
+    bottom: 0;
+	float: right;
+
+}
+
+@media only screen and (min-width : 768px) {
+  
+  .row {
+    display: table;
+  }
+  [class*="col-"] {
+    float: none;
+  	display: table-cell;
+    vertical-align: top;
+    position: relative;
+  }
+  p.button {
+    position: absolute;
+    bottom: 0;
+    /*text-align: center;*/
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+  }
+}
+/* Style the Image Used to Trigger the Modal */
+.enlargeIMG {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.enlargeIMG:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption { 
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+
+.close_form {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 35px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+}
+#banner {
+    height: 40px;
+    line-height: 1;
+    position: fixed;
+    width: 100%;
+    bottom: -1;
+    left: 0;
+    padding: 14px 30px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    white-space: nowrap;
+    color: #FFFFFF;
+	font-weight: bold;
+    background: #666666;
+	opacity: 0.85;
+	filter: alpha(opacity=85); /* For IE8 and earlier */
+    border-top: 0px solid #3e3e3f;
+    z-index: 999;
+	display: none;
+	}
+
+#new_customer_banner {
+    line-height: 1;
+    position: fixed;
+    padding: 14px 30px;
+    white-space: nowrap;
+    color: #FFFFFF;
+	font-weight: bold;
+    background: #666666;
+    z-index: 2000;
+	left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+	text-align: left;
+	display: none;
+	}
+	
+#match_found_btn {
+	position: absolute;
+	right: 40px;
+	top: 5px;
+	bottom: 5px;
+}
+
+#no_match_found_btn {
+
+}
+
+#new_customer_form {
+
+}
+
+.table_radio {
+	margin:100px 0px !important;
+}
+
+span.table-info {
+	font-size: 15px;
+	font-style: italic;
+}
+
+.incorrect_input {
+	color: red;
+	display:none;
+}
+
+.top-buffer {
+	margin-top:50px;
+}
+
+#del_image td {
+word-wrap:break-word;
+}
+
+.cust_thumbnail {
+	display: block;
+	margin: 0 auto;
+}
+
+th {
+	text-align:center;
+}
+
+.delete-button {
+float: left;
+margin: 10px;
+}
+
+.question-buffer {
+	margin-top:25px;
+}
