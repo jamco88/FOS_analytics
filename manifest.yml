@@ -1,0 +1,9 @@
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: lbg.eu-gb.mybluemix.net
+  name: FOS-analytics
+  host: FOS-analytics
+  disk_quota: 1024M
+  buildpack: python_buildpack
