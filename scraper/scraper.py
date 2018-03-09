@@ -27,7 +27,7 @@ def update_corpus():
     proxies = {'http': 'http://' + username + ':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/', 'https': 'https://'+username+':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/'}
       
     #start_no = 163401
-    start_no = 125416
+    start_no = 95416
     
     # Check for the existence of the OmbudsmanCorpus file
     if os.path.isfile(FILE_NAME):
