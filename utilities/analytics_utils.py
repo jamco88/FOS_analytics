@@ -6,9 +6,10 @@ import json
 
 from config import FILE_NAME, COMPANY_ALIASES, NO_TOPICS
 
+
 class OmbudsmanLibrary(object):
     def __iter__(self):
-        with open(FILE_NAME, "r", encoding = "ISO-8859-1") as jsonfile:
+        with open(FILE_NAME, "r", encoding="ISO-8859-1") as jsonfile:
             for i, row in enumerate(jsonfile.readlines()):
                 if i > 0:
                     yield json.loads(row)

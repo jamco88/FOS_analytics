@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 26 10:08:17 2017
-
-@author: 9848504
-
-Contains the functions to extract text from and clean PDF docs
-"""
 import PyPDF2
 from nltk import word_tokenize
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -14,9 +6,14 @@ import string
 import time
 import pandas as pd
 import os
+import nltk
+
+# Re-point the nltk_data
+nltk.data.path.append("./scraper/nltk_data")
+print(nltk.data.path)
 
 def clean(doc):
-    '''Function to clean up the raw text from a document'''
+    """Function to clean up the raw text from a document"""
     exclude = set(string.punctuation)
     # Include additional stopwords
     ignore_words = ['mr',"mrs",'miss', 'also', 'would', 'could', 'may', 'whether', 'however', 'annex', 'chapter', 'appendix', 'footnote',"n't"]

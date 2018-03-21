@@ -1,5 +1,6 @@
-pip
 Flask==0.10.1
 pandas
 gensim
 apscheduler
+PyPDF2
+nltk

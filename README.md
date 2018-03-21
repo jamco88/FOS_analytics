@@ -1,5 +1,5 @@
-# Finincial Ombudsman Service Complaints Analytics
-Data analysis developed by Risk Innovation team to discover trends in Financial Ombudsman Complaints data to give better legal oversite of emerging threats.
+# Financial Ombudsman Service Complaints Analytics
+Data analysis developed by Risk Innovation team to discover trends in Financial Ombudsman Complaints data to give better legal over site of emerging threats.
 
 The application runs in Cloud Foundry on the LBG sandbox - currently in the DEV environment ([RI face recognition](https://raft-face-recognition.lbg.eu-gb.mybluemix.net/))<hr></hr>
 
@@ -25,7 +25,7 @@ The flat files produced are then surfaced in an interactive SAS Visual Analytics
 ## <a name="background"></a>Background
 Teams in Group Legal are required to understand the external legal and regulatory environments and spot trends or patterns that may come to materially impact the group (e.g. PPI). The Financial Ombudsman Service publishes complaints on which it makes decisions whether or not to uphold, and the remediatory required to be taken by the company involved. This is a rich source of information about consumer trends, and potential compliance risks, however the volumes of complaints mean it is unfeasible to capture and understand all of this information by reading all of the complaint releases (the corpus contains over 100,000 documents).
 
-This motivated the development of an application with which the high level trends can be abstracted, still with the capabilty to drill down and aggregate by different filters as well as access the original complaint documents.
+This motivated the development of an application with which the high level trends can be abstracted, still with the capability to drill down and aggregate by different filters as well as access the original complaint documents.
 
 ## <a name="get-started"></a>Running the Process
 

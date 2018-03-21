@@ -204,6 +204,5 @@ if __name__ == '__main__':
         # Output similarity and topic tables
         create_similarities(tfidf_sector_corpus, ref_lookup)
         track_topics(vt[sector_corpus], ref_lookup, filtered_dict)
-        
     
     print("Small corpus time taken:", time.time() - timestart)

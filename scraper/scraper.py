@@ -1,49 +1,50 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 26 10:06:17 2017
-
-@author: 9848504
-"""
-
-from pdf_clean_utils import create_corpus
-from gensim.summarization import summarize
+from scraper.pdf_clean_utils import create_corpus
 import requests
-from getpass import getpass, getuser
 import os
 import json
+from config import PROXIES, FILE_NAME
 
-FILE_NAME = "./scraping_data/small_corpus2.json"
 
-def get_existing_complaints():
-    visited_urls = []
-    with open(FILE_NAME, "r", encoding="ISO-8859-1") as f:
-        for line in f.readlines():
-            visited_urls.append(json.loads(line)["FileID"])
-    return visited_urls
-
-def update_corpus():
-    password = getpass()
-    username = getuser()
-    proxies = {'http': 'http://' + username + ':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/', 'https': 'https://'+username+':'+password+'@PROXYARRAY.SERVICE.GROUP:8080/'}
-      
-    #start_no = 163401
-    start_no = 95416
-    
-    # Check for the existence of the OmbudsmanCorpus file
-    if os.path.isfile(FILE_NAME):
-        retrieved_complaints = get_existing_complaints()
+def get_retrieved_complaints(filename=FILE_NAME):
+    if os.path.isfile(filename):
+        print("getting existing")
+        retrieved_complaints = [num for num in existing_complaints()]
     else:
         print("No file")
-        retrieved_complaints = []
-    
-    for n in range(start_no, start_no-30000, -1):
+        retrieved_complaints = [0]
+    retrieved_complaints = [171181]
+    return retrieved_complaints
+
+
+def existing_complaints():
+    with open(FILE_NAME, "r", encoding="ISO-8859-1") as f:
+        for line in f.readlines():
+            yield json.loads(line)["FileID"]
+
+
+def scrape_ahead_n_complaints(n_ahead=1000):
+    """
+
+    :param n_ahead:
+    :return:
+    """
+    already_scraped = get_retrieved_complaints()
+    start_no = max(already_scraped) + n_ahead
+    update_corpus(start_no, already_scraped)
+
+def update_corpus(latest_number, retrieved_complaints):
+
+    #start_no = 171183 - 169414 - 162415 - 132416 - 95416
+
+    retrieved_complaints = [171181]
+    for n in range(latest_number, max(retrieved_complaints), -1):
         url = "http://www.ombudsman-decisions.org.uk/viewPDF.aspx?FileID="+str(n)
         #print(url)
         n_trys = 3
         if n not in retrieved_complaints:
             for attempt_no in range(n_trys):
                 try:
-                    x = requests.get(url, proxies=proxies)
+                    x = requests.get(url, proxies=PROXIES)
                     attempt_no = 0
                     break
                 except:

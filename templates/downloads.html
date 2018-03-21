@@ -1,9 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="jumbotron">
-{% for file in downloads %}
+{% for file in outputs %}
 <p>
-	<a href="/download_file/{{file}}" class="btn btn-success">{{file}}</a>
+	<a href="/download_file/output/{{file}}" class="btn btn-success">{{file}}</a>
+</p>
+{% endfor %}
+
+{% for file in scrapes %}
+<p>
+	<a href="/download_file/scrapes/{{file}}" class="btn btn-success">{{file}}</a>
 </p>
 {% endfor %}
 </div>

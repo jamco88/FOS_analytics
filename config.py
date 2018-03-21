@@ -1,4 +1,17 @@
-FILE_NAME = "./scraper/scraping_data/small_corpus2.json"
+from getpass import getpass, getuser
+import sys
+
+FILE_NAME = "./scraper/scraping_data/small_corpus_cf.json"
+
+if sys.platform == "win32":
+    print("Get password")
+    password = getpass()
+    username = getuser()
+    PROXIES = {'http': 'http://' + username + ':' + password + '@PROXYARRAY.SERVICE.GROUP:8080/',
+               'https': 'https://' + username + ':' + password + '@PROXYARRAY.SERVICE.GROUP:8080/'}
+else:
+    PROXIES = {}
+
 
 COMPANY_ALIASES = "natwest halifax amex bos rb uki lv rsa urv wonga quick quid pound pocket barclaycard ipa"
 NO_TOPICS = 15
