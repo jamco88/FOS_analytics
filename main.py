@@ -10,12 +10,12 @@ import time
 import psutil
 import copy
 import logging
+from config import NO_TOPICS, NO_SIM_TOPICS, THRESHOLD, TFIDF_THRESHOLD
+from config import COMPLAINTS_WORD_TFIDF, CORPUS_METADATA, SIMILARITY_INDEX, TOPIC_LOOKUP, TOPIC_TIMESERIES
 
 logging.basicConfig(format='%(levelname)s : %(message)s', level=logging.INFO)
 logging.root.level = logging.INFO  # ipython sometimes messes up the logging setup; restore
 
-from config import NO_TOPICS, NO_SIM_TOPICS, THRESHOLD, TFIDF_THRESHOLD
-from config import COMPLAINTS_WORD_TFIDF, CORPUS_METADATA, SIMILARITY_INDEX, TOPIC_LOOKUP, TOPIC_TIMESERIES
 
 CORP_LOC = "./corpus_objects"
 
@@ -93,7 +93,7 @@ def create_tfidf(corpus_loaded):
 def create_tfidf_frame(corpus_loaded, dict_loaded):
     """Create an output file for loading into SAS VA (Wordcloud View)"""
     cor_frames = []
-    for ind, text in enumerate(tfidf_corpus):
+    for ind, text in enumerate(corpus_loaded):
         # Create list of word, tfidf weighting pairs
         word_tfidf = [[dict_loaded[word[0]], word[1]] for word in text if word[1] > TFIDF_THRESHOLD] 
         unzipped_wordfreqs = list(zip(*word_tfidf))
@@ -140,7 +140,7 @@ def create_metadata():
 
  
 @print_timing
-def create_similarities(tfidf_sector_corpus, index_alignment):
+def create_similarities(tfidf_sector_corpus, index_alignment, dict_loaded):
     """Creates similarity index dataset for SAS VA dashboard (Document similarities)"""
     simi_mod = models.LsiModel(tfidf_sector_corpus, id2word=dict_loaded, num_topics=NO_SIM_TOPICS)
     sim_corpus = simi_mod[tfidf_sector_corpus]
@@ -159,32 +159,32 @@ def create_similarities(tfidf_sector_corpus, index_alignment):
 
         
 @print_timing
-def track_topics(sector_corpus, index_lookup, cor_dict):
-    lsi_mod=models.LdaModel(sector_corpus, id2word=cor_dict, num_topics=NO_TOPICS, passes=25)
+def track_topics(sector_corpus, index_lookup, cor_dict, sector_index):
+    lsi_mod = models.LdaModel(sector_corpus, id2word=cor_dict, num_topics=NO_TOPICS, passes=25)
     
-    topics_table = pd.DataFrame([{**{"doc_id":indices[n]}, **score_topics_lda(lsi_mod, x, sect_ind)} for n, x in enumerate(sector_corpus)])
+    topics_table = pd.DataFrame([{**{"doc_id":index_lookup[n]}, **score_topics_lda(lsi_mod, x, sector_index)} for n, x in enumerate(sector_corpus)])
     topics_table.to_csv(TOPIC_TIMESERIES, mode='a', header=False, index=False)
     del topics_table
     
     # Export topics lookup
     transformed_topics = [(x[0], ", ".join([str(y[0]) for y in x[1][:7]])) for x in lsi_mod.show_topics(num_topics=NO_TOPICS, formatted=False)]
-    theme_lookups=pd.DataFrame([{"Topic": "Topic"+str(x[0])+sect_ind, "Vector": x[1]} for x in transformed_topics])
+    theme_lookups=pd.DataFrame([{"Topic": "Topic"+str(x[0])+sector_index, "Vector": x[1]} for x in transformed_topics])
     theme_lookups.to_csv(TOPIC_LOOKUP, mode='a', header=False, index=False)
     del theme_lookups
         
-if __name__ == '__main__':
+def create_output_tables():
     timestart = time.time()
     corpus_loaded, dict_loaded = create_corpus()
     tfidf_corpus = create_tfidf(corpus_loaded)
-    create_tfidf_frame(corpus_loaded, dict_loaded)
+    create_tfidf_frame(tfidf_corpus, dict_loaded)
     sectors_dict, sector_reference = create_metadata()
     filtered_dict = copy.deepcopy(dict_loaded)
     filtered_dict.filter_extremes()
-    old2new = {dict_loaded.token2id[token]:new_id for new_id, token in filtered_dict.items()}
+    old2new = {dict_loaded.token2id[token]: new_id for new_id, token in filtered_dict.items()}
     vt = models.VocabTransform(old2new)
     print("Length of overall corpus is: "+str(len(corpus_loaded))+" docs")
     
-    # Initialize the empty csvs to append to
+    # Initialize the empty CSVs to append to
     reset_datafile(SIMILARITY_INDEX, ["doc_id", "Similar", "Scores"])
     reset_datafile(TOPIC_TIMESERIES, ["Unused"]*NO_TOPICS+["doc_id", "top_topic1", "top_topic2", "top_topic3"])
     reset_datafile(TOPIC_LOOKUP, ["Topic", "Vector"])
@@ -196,13 +196,18 @@ if __name__ == '__main__':
         ref_lookup = dict(zip(range(len(indices)), indices))
         
         # Create serialized sector specific corpus
+        print(corpus_loaded)
+        print(indices)
         corpora.MmCorpus.serialize(os.path.join(CORP_LOC, 'sector_corpus.mm'), corpus_loaded[indices])
         sector_corpus = corpora.MmCorpus(os.path.join(CORP_LOC, 'sector_corpus.mm'))
         
         tfidf_sector_corpus = create_tfidf(sector_corpus)
         
         # Output similarity and topic tables
-        create_similarities(tfidf_sector_corpus, ref_lookup)
-        track_topics(vt[sector_corpus], ref_lookup, filtered_dict)
+        create_similarities(tfidf_sector_corpus, ref_lookup, dict_loaded)
+        track_topics(vt[sector_corpus], ref_lookup, filtered_dict, sect_ind)
     
     print("Small corpus time taken:", time.time() - timestart)
+
+if __name__ == '__main__':
+    create_output_tables()

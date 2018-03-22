@@ -11,8 +11,7 @@ class OmbudsmanLibrary(object):
     def __iter__(self):
         with open(FILE_NAME, "r", encoding="ISO-8859-1") as jsonfile:
             for i, row in enumerate(jsonfile.readlines()):
-                if i > 0:
-                    yield json.loads(row)
+                yield json.loads(row)
 
 def word_type(x):
     if len(x.split()) == 1:
@@ -55,10 +54,10 @@ def stream():
         yield row
 
 
-
 def corpus_sector_indices(sector, sectors_dict):
-    return [k for k,v in sectors_dict.items() if v == sector]
-            
+    return [k for k, v in sectors_dict.items() if v == sector]
+
+
 class Raw_CSV(object):
      def __iter__(self):
         with open(FILE_NAME, "r", encoding = "ISO-8859-1") as csvfile:

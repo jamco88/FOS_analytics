@@ -1,7 +1,7 @@
 from getpass import getpass, getuser
 import sys
 
-FILE_NAME = "./scraper/scraping_data/small_corpus_cf.json"
+FILE_NAME = "./scraper/scraping_data/small_corpus2.json"
 
 if sys.platform == "win32":
     print("Get password")
