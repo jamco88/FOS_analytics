@@ -1,3 +1,3 @@
-/scraper/scraping_data/small_corpus_cf.json
+/scraper/scraping_data/*
 /corpus_objects/*.mm
 /output_data/*.csv

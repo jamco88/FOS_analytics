@@ -5,3 +5,4 @@ apscheduler
 PyPDF2
 nltk
 psutil
+cloudant==2.3.1

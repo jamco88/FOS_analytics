@@ -2,7 +2,7 @@ import os
 import requests
 from flask import Flask, send_from_directory, render_template
 from werkzeug.utils import secure_filename
-#from scraper.scraper import scrape_ahead_n_complaints
+from scraper.scraper import scrape_ahead_n_complaints
 from config import FILE_NAME
 from main import create_output_tables
 app = Flask(__name__)
@@ -26,6 +26,6 @@ def file_download(filename, library):
 
 port = os.getenv('PORT', '5000')
 if __name__ == "__main__":
-    #scrape_ahead_n_complaints(n_ahead=30)
+    scrape_ahead_n_complaints(n_ahead=30)
     create_output_tables()
     app.run(host='0.0.0.0', port=int(port), debug=True)

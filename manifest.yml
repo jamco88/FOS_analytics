@@ -1,6 +1,6 @@
 applications:
 - path: .
-  memory: 1408M
+  memory: 4096M
   instances: 1
   domain: lbg.eu-gb.mybluemix.net
   name: FOS-analytics

@@ -25,3 +25,5 @@ CORPUS_METADATA = "./output_data/corpus_metadata.csv"
 SIMILARITY_INDEX = "./output_data/sim_index.csv"
 TOPIC_LOOKUP = "./output_data/topic_lookup.csv"
 TOPIC_TIMESERIES = "./output_data/topic_timeseries.csv"
+
+DB_NAME = "fos_decisions"
