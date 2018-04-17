@@ -146,16 +146,17 @@ def create_similarities(tfidf_sector_corpus, index_alignment, dict_loaded):
     sim_corpus = simi_mod[tfidf_sector_corpus]
     lookup_func = np.vectorize(index_alignment.get)
     #Constructing the similarity matrix, exporting similarity table
-    doc_index = similarities.MatrixSimilarity(sim_corpus)
-    themed_sim_matrix = np.hstack((np.array([
-                                             lookup_func([n]*x[x > THRESHOLD].shape[0]),
-                                             lookup_func(np.where(x > THRESHOLD)[0]), 
-                                             x[x > THRESHOLD]]) 
-                                             for n, x in enumerate(doc_index[sim_corpus])
-                                             if x[x > THRESHOLD].shape[0] > 0))
+    doc_index = similarities.Similarity("./index_temp", sim_corpus, sim_corpus.num_terms)
+    for n, x in enumerate(doc_index):
+        if x[x > THRESHOLD].shape[0] > 0:
+            themed_sim_array = np.array([
+                                         lookup_func([n]*x[x > THRESHOLD].shape[0]),
+                                         lookup_func(np.where(x > THRESHOLD)[0]),
+                                         x[x > THRESHOLD]
+            ])
 
-    with open(SIMILARITY_INDEX, 'ab') as f:
-        np.savetxt(f, themed_sim_matrix.transpose(), delimiter=",", fmt='%i,%i,%1.4f')
+        with open(SIMILARITY_INDEX, 'ab') as f:
+            np.savetxt(f, themed_sim_array.transpose(), delimiter=",", fmt='%i,%i,%1.4f')
 
         
 @print_timing
@@ -207,7 +208,7 @@ def create_output_tables():
         create_similarities(tfidf_sector_corpus, ref_lookup, dict_loaded)
         track_topics(vt[sector_corpus], ref_lookup, filtered_dict, sect_ind)
     
-    print("Small corpus time taken:", time.time() - timestart)
+    print("Analysis time taken:", time.time() - timestart)
 
 if __name__ == '__main__':
     create_output_tables()

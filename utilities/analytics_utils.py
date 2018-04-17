@@ -3,15 +3,24 @@ from heapq import nlargest
 import csv
 import ast
 import json
+from cloudant.result import Result
+# Enable the required Python libraries for working with Cloudant NoSQL DB.
 
-from config import FILE_NAME, COMPANY_ALIASES, NO_TOPICS
+from config import FILE_NAME, COMPANY_ALIASES, NO_TOPICS, DB_NAME, connect_to_client
 
 
 class OmbudsmanLibrary(object):
+    # def __iter__(self):
+    #     with open(FILE_NAME, "r", encoding="ISO-8859-1") as jsonfile:
+    #         for i, row in enumerate(jsonfile.readlines()):
+    #             yield json.loads(row)
+
     def __iter__(self):
-        with open(FILE_NAME, "r", encoding="ISO-8859-1") as jsonfile:
-            for i, row in enumerate(jsonfile.readlines()):
-                yield json.loads(row)
+        client = connect_to_client()
+        for doc in Result(client[DB_NAME].all_docs, include_docs=True, descending=True):
+            yield doc["doc"]
+        client.disconnect()
+
 
 def word_type(x):
     if len(x.split()) == 1:

@@ -1,16 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
+
 <div class="jumbotron">
+    <p>
+        Length of corpus: {{num_files}}
+    </p>
+    <p>
+        Latest complaint scraped: <a href="http://www.ombudsman-decisions.org.uk/viewPDF.aspx?FileID={{latest_file}}">{{latest_file}}</a>
+    </p>
 {% for file in outputs %}
 <p>
 	<a href="/download_file/output/{{file}}" class="btn btn-success">{{file}}</a>
 </p>
 {% endfor %}
 
-{% for file in scrapes %}
-<p>
-	<a href="/download_file/scrapes/{{file}}" class="btn btn-success">{{file}}</a>
-</p>
-{% endfor %}
 </div>
 {% endblock body %}

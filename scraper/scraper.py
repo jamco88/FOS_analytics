@@ -4,27 +4,20 @@ import os
 import json
 from cloudant.query import Query
 # Enable the required Python libraries for working with Cloudant NoSQL DB.
-from cloudant.client import Cloudant
-from config import PROXIES, FILE_NAME, DB_NAME
+
+from config import connect_to_client, PROXIES, FILE_NAME, DB_NAME
 
 
 def get_retrieved_complaints():
     client = connect_to_client()
-    retrieved_complaints = [x["FileID"] for x in Query(DB_NAME, selector={"_id": {"$gt": 0}}, fields=["FileID"], sort=[{"FileID": "asc"}]).result]
-    client.disconnect()
-    print("EXISTING", retrieved_complaints)
+    retrieved_complaints = [int(x["id"]) for x in client[DB_NAME].all_docs()['rows']]
+    if len(retrieved_complaints) == 0:
+        retrieved_complaints = [100000]
     return retrieved_complaints
-
-
-def existing_complaints():
-    with open(FILE_NAME, "r", encoding="ISO-8859-1") as f:
-        for line in f.readlines():
-            yield json.loads(line)["FileID"]
 
 
 def scrape_ahead_n_complaints(n_ahead=1000):
     """
-
     :param n_ahead:
     :return:
     """
@@ -38,9 +31,9 @@ def update_corpus(latest_number, retrieved_complaints):
     client = connect_to_client()
     database = client[DB_NAME]
 
-    for n in range(latest_number, max(retrieved_complaints), -1):
+    for n in range(172185, 100000, -1):
         url = "http://www.ombudsman-decisions.org.uk/viewPDF.aspx?FileID="+str(n)
-        #print(url)
+        print(url)
         n_trys = 3
         if n not in retrieved_complaints:
             for attempt_no in range(n_trys):
@@ -62,6 +55,7 @@ def update_corpus(latest_number, retrieved_complaints):
                 corpus_entry['Text'] = pdf_corpus
                 corpus_entry['URL'] = x.url[7::]
                 corpus_entry['FileID'] = n
+                corpus_entry['_id'] = str(n)
                 corpus_entry['raw_text'] = raw_text
                 corpus_entry['summary'] = raw_text.replace(".", ". ").replace("\n", ". ").replace("\r", ". ")[:400]+"..."
 
@@ -75,37 +69,4 @@ def update_corpus(latest_number, retrieved_complaints):
                 #     f.write(json.dumps(corpus_entry.to_dict()))
                 #     f.write("\n")
     client.disconnect()
-
-
-def connect_to_client():
-    if 'VCAP_SERVICES' in os.environ:
-        # Yes we are, so get the service information.
-        vcap_servicesData = json.loads(os.environ['VCAP_SERVICES'])
-        #print(vcap_servicesData)
-        # Look for the Cloudant NoSQL DB service instance.
-        cloudantNoSQLDBData = vcap_servicesData['cloudantNoSQLDB Dedicated']
-        # Log the fact that we successfully found some Cloudant NoSQL DB service information.
-        print("Got cloudantNoSQLDBData\n")
-        # Get a list containing the Cloudant NoSQL DB connection information.
-        credentials = cloudantNoSQLDBData[0]
-
-        # Get the essential values for our application to talk to the service.
-        credentials_data = credentials['credentials']
-        print(credentials_data)
-
-
-    else:
-        # Delete these credentials from
-        with open("cloudant_credentials.json", "r") as creds_file:
-            credentials_data = json.load(creds_file)
-
-    username = credentials_data['username']
-    password = credentials_data['password']
-    service_url = credentials_data['url']
-
-    # We now have all the details we need to work with the Cloudant NoSQL DB service instance.
-    # Connect to the service instance.
-    client = Cloudant(username, password, url=service_url)
-    client.connect()
-    return client
 
