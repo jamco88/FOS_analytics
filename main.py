@@ -146,7 +146,7 @@ def create_similarities(tfidf_sector_corpus, index_alignment, dict_loaded):
     sim_corpus = simi_mod[tfidf_sector_corpus]
     lookup_func = np.vectorize(index_alignment.get)
     #Constructing the similarity matrix, exporting similarity table
-    doc_index = similarities.Similarity("./index_temp", sim_corpus, sim_corpus.num_terms)
+    doc_index = similarities.Similarity("./index_temp", sim_corpus, NO_SIM_TOPICS)
     for n, x in enumerate(doc_index):
         if x[x > THRESHOLD].shape[0] > 0:
             themed_sim_array = np.array([

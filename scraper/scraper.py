@@ -22,16 +22,16 @@ def scrape_ahead_n_complaints(n_ahead=1000):
     :return:
     """
     already_scraped = get_retrieved_complaints()
-    start_no = max(already_scraped) + n_ahead
-    update_corpus(start_no, already_scraped)
+    start_no = max(already_scraped)
+    update_corpus(start_no, already_scraped, n_ahead)
 
-def update_corpus(latest_number, retrieved_complaints):
 
-    #start_no = 171183 - 169414 - 162415 - 132416 - 95416
+def update_corpus(latest_number, retrieved_complaints, n_ahead):
+
     client = connect_to_client()
     database = client[DB_NAME]
 
-    for n in range(172185, 100000, -1):
+    for n in range(latest_number + 1, latest_number + n_ahead):
         url = "http://www.ombudsman-decisions.org.uk/viewPDF.aspx?FileID="+str(n)
         print(url)
         n_trys = 3

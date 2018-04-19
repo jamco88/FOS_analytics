@@ -1,3 +1,10 @@
 /scraper/scraping_data/*
 /corpus_objects/*.mm
 /output_data/*.csv
+*.index
+*.mm
+*.projection
+*.dict
+/archive
+*__pycache__*
+*.csv
