@@ -39,10 +39,10 @@ def scrape_run():
     if len(get_retrieved_complaints()) == 1:
         scrape_ahead_n_complaints(n_ahead=74000)
     else:
-        scrape_ahead_n_complaints(n_ahead=5000)
+        scrape_ahead_n_complaints(n_ahead=1500)
 
     data = json.load(open('run_info.json'))
-    data["scrape"] = "Last scrape successfully executed at" + datetime.strftime(datetime.today(), "%d-%m-%Y %H:%M")
+    data["scrape"] = "Last scrape successfully executed at " + datetime.strftime(datetime.today(), "%d-%m-%Y %H:%M")
     with open("run_info.json", "w") as f:
         json.dump(data, f)
 
