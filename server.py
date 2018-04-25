@@ -56,12 +56,14 @@ def analytics_run():
         json.dump(data, f)
 
 
-
 def schedule_analytics_run():
     """"""
     scheduler = BackgroundScheduler()
-    scheduler.add_job(scrape_run, "cron", day_of_week="mon-fri", hour=0, minute=0)
-    scheduler.add_job(analytics_run, "cron", day_of_week="sat", hour=0, minute=0)
+    # Add a scheduled run from restart so tables are populated
+    scheduler.add_job(analytics_run, "date", run_date=datetime.now().replace(minute=datetime.now().minute+1))
+
+    scheduler.add_job(scrape_run, "cron", day_of_week="mon,wed-fri", hour=0, minute=0)
+    scheduler.add_job(analytics_run, "cron", day_of_week="sat,tue", hour=0, minute=0)
     scheduler.start()
 
 
