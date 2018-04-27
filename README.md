@@ -33,6 +33,7 @@ This motivated the development of an application with which the high level trend
 The web application is scheduled to scrape the latest complaints from the FOS website and produce the output tables, these can be downloaded from https://fos-analytics.lbg.eu-gb.mybluemix.net/.
 
 | Activity | Schedule |
+| ------------- | ------------- |
 | Scraping 1500 complaints ahead | monday, wednesday - friday |
 | Table creation | tuesday, saturday |
 
