@@ -14,7 +14,7 @@ The flat files produced are then surfaced in an interactive SAS Visual Analytics
 
 ## <a name="team-members"></a>Team Members
 #### Development
-* "(Deprecated) Sven Harris" <sven.harris@lloydsbanking.com>
+* **(Deprecated)** "Sven Harris" <sven.harris@lloydsbanking.com>
 * "Jack Grimes" <jack.grimes@lloydsbanking.com>
 * "Gordon Baggott" <gordon.baggott@lloydsbanking.com>
 
@@ -36,7 +36,7 @@ The web application is scheduled to scrape the latest complaints from the FOS we
 | Scraping 1500 complaints ahead | monday, wednesday - friday |
 | Table creation | tuesday, saturday |
 
-**Note: Scheduled runs don't always execute successfully, on restarting the application the analytics tables will run, this can take around 8 hours if you're unlucky, which you are, I'm sorry. Also if you notice the latest complaint hasn't go any bigger check on the website and make sure they haven't skipped ahead more than 1500 so you might want to do something about that.
+**Note: Scheduled runs don't always execute successfully, on restarting the application the analytics tables will run, this can take around 8 hours if you're unlucky, which you are, I'm sorry. Also if you notice the latest complaint hasn't go any bigger check on the website and make sure they haven't skipped ahead more than 1500 so you might want to do something about that.**
 
 
 ### Updating the report
@@ -65,7 +65,7 @@ To produce the output tables the following queries need to be run, these can be 
 | QUERY_MAIN_WORDCLOUD  | COMPLAINTS_TFIDF, CORPUS_METADATA_V2  | MAIN_WORDCLOUD  | Adds the metadata onto the word frequency data for SAS VA dashboard |
 | QUERY_DOUBLE_SEARCH | COMPLAINTS_TFIDF x2, CORPUS_METADATA_V2 | DOUBLE_SEARCH | This is for the double drill down search |
 
-**Note: Here's a kooky one for you, the QUERY_DOUBLE_SEARCH may fail, WHY DOES IT FAIL? Well, you need to change the order in the 'Joins' tab of the query and then run it. Don't ask me why, I'm not around anymore.
+**Note: Here's a kooky one for you, the QUERY_DOUBLE_SEARCH may fail, WHY DOES IT FAIL? Well, you need to change the order in the 'Joins' tab of the query and then run it. Don't ask me why, I'm not around anymore.**
 
 ##### Updating the report
 Enter the report in Report Designer view (located at **Shared Data/Demo/Reports/FOS Scanning v2**).
