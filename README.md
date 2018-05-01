@@ -71,7 +71,7 @@ To produce the output tables the following queries need to be run, these can be 
 ##### Updating the report
 Enter the report in Report Designer view (located at **Shared Data/Demo/Reports/FOS Scanning v2**).
 1. Update all of the date sliders to include the latest date
-1. Each of the external URL links will need to be reset (due to a SAS VA bug). These can be found in the 'Interactions' tab, links need to be updated from 'http:' to 'http:\\'
+1. Each of the external URL links will need to be reset (due to a SAS VA bug). These can be found in the 'Interactions' tab, links need to be updated from 'http:' to 'http:\\\\' (two backslashes)
 
 ## <a name="theory"></a>Theory
 *[gensim](https://radimrehurek.com/gensim/index.html)
