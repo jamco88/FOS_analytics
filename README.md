@@ -46,7 +46,7 @@ Each of the tables produced by the Python text analytics needs to be loaded into
 ##### Loading the tables
 The below tables need to be loaded into SAS VA, this can be done in SAS Visual Data Builder (to import File > Import Data...). They need to be uploaded into the following location **Shared Data/SAS Visual Analytics/Public/LASR/FOS scanning/RAW2** 
 
-All tables need to be uploaded as <name>_tng - This was due to permission errors.
+All tables need to be uploaded with the suffix of **_tng** - This was due to permission errors.
 
 **Note: When uploading the TOPIC_TIMESERIES table set rows to scan to 100,000 otherwise some values can become truncated**
 
