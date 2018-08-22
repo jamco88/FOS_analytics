@@ -75,6 +75,17 @@ Enter the report in Report Designer view (located at **Shared Data/Demo/Reports/
 1. Update all of the date sliders to include the latest date
 1. Each of the external URL links will need to be reset (due to a SAS VA bug). These can be found in the 'Interactions' tab, links need to be updated from 'http:' to 'http:\\\\' (two backslashes)
 
+##### Restarting after LASR crash
+As the queries create tables just in LASR memory, these are lost when the server restarts. So you will need to run the queries again. Until LASR issues resolved, only run these 3:
+
+QUERY_LDA_TOPICS_TNG
+QUERY_MAIN_WORDCLOUD_TNG
+QUERY_SIMILARITY_INDEX_TNG
+
+It shouldn't need to have the tables reloaded but if it does then upload the tables again as above. If you have trouble downloading from Bluemix (I did) then here are my latest ones:
+
+http://hdmduv001a.machine.test.group/keith/
+
 ## <a name="theory"></a>Theory
 *[gensim](https://radimrehurek.com/gensim/index.html)
 
